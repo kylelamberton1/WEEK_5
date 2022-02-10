@@ -26,7 +26,8 @@ def update(name):
 @app.route('/delete')
 def delete():
     first_game = Games.query.first()
-    db.session.delete.commit()
+    db.session.delete(first_game)
+    db.session.commit()
     return "You have deleted the first game"
 
 @app.route('/count')
