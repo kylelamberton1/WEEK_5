@@ -16,4 +16,4 @@ db.session.commit()
 
 print(f"Cities in the UK are: {uk.cities[0].name}, {uk.cities[1].name}")
 print(f"London's country is: {ldn.country.name}")
-print(f"Manchester's country is: {mcr.country.name}")
+print(f"Manchester's country is: {ldn.country.name}")

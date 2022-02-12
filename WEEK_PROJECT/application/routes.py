@@ -1,12 +1,21 @@
 from application import app, db
 from application.models import To_do
 
-@app.route('/add')
-def add():
-    new_task = To_do (task="New Task")
-    db.session.add(new_task)
+@app.route('/home')
+def home():
+    all_to_do = To_do.query.all()
+    to_do_string = ""
+    for task in all_to_do:
+        to_do_string += "<br>"+ task.task
+    return "HI, WELCOME TO YOUR TO-DO LIST" + "<br>" + to_do_string 
+    
+    
+@app.route('/add/<task>')
+def add(task):
+    add_task = To_do (task=task, description = "a new task")
+    db.session.add(add_task)
     db.session.commit()
-    return "Added new task to database"
+    return f"Added a new task to the database: '{task}'" 
 
 @app.route('/read')
 def read():
@@ -16,36 +25,46 @@ def read():
         to_do_string += "<br>"+ task.task
     return to_do_string
 
-@app.route('/update/<task>')
-def update(task):
-    first_task = To_do.query.first()
-    first_task.task = task
+@app.route('/update/<newtask>')
+def update(newtask):
+    update_task = To_do.query.first()
+    old_name=update_task.task
+    update_task.task = newtask
     db.session.commit()
-    return first_task.task
+    return f"The first task named: '{old_name}', has been replaced with: '{newtask}'"
 
-@app.route('/delete')
-def delete():
-    first_task = To_do.query.first()
+@app.route('/delete/<task>')
+def delete(task):
+    first_task = To_do.query.filter_by(task=task).first()
     db.session.delete(first_task)
     db.session.commit()
-    return "You have deleted the first task"
+    return f"You have deleted the task named: '{task}'"
 
 
-@app.route('/update')
-def complete():
-    first_task = To_do.query.first()
-    first_task.complete = True
+@app.route('/completed/<task>')
+def completed(task):
+    first_task = To_do.query.filter_by(task=task).first()
+    first_task.completed = True
     db.session.commit()
-    return first_task.complete
+    return f"You have completed this task: '{task}'"
 
-'''
-@app.route('/update/')
-def incomplete():
-    first_task = To_do.query.first()
+@app.route('/incomplete/<task>')
+def incomplete(task):
+    first_task = To_do.query.filter_by(task=task).first()
     first_task.incomplete = True
     db.session.commit()
-    return first_task.incomplete
-'''
+    return f"You have not completed this task: '{task}'"
+
+
+#######cunt
+@app.route('/see_completed')
+def see_completed():
+    all_completed = To_do.query.filter_by(completed).all()
+    all_completed.complete = True
+    for completed in all_completed:
+        all_completed += "<br>"+ completed.completed
+    return all_completed
+
 
 
 

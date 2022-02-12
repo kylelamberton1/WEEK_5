@@ -1,0 +1,8 @@
+{% extends 'main.html' %}
+{% block todo %}
+    <h3>All Tasks:</h3>
+    <h4>{{ error }}</h4>
+    {% for task in tasks %}
+        Name: {{ task.name }} Completed: {{ task.completed }}<br>
+    {% endfor %}
+{% endblock todo %}
