@@ -1,14 +1,6 @@
 from application import app, db
 from application.models import To_do
 
-@app.route('/home')
-def home():
-    all_to_do = To_do.query.all()
-    to_do_string = ""
-    for task in all_to_do:
-        to_do_string += "<br>"+ task.task
-    return "HI, WELCOME TO YOUR TO-DO LIST" + "<br>" + to_do_string 
-    
     
 @app.route('/add/<task>')
 def add(task):
@@ -56,14 +48,7 @@ def incomplete(task):
     return f"You have not completed this task: '{task}'"
 
 
-#######cunt
-@app.route('/see_completed')
-def see_completed():
-    all_completed = To_do.query.filter_by(completed).all()
-    all_completed.complete = True
-    for completed in all_completed:
-        all_completed += "<br>"+ completed.completed
-    return all_completed
+
 
 
 

@@ -1,0 +1,7 @@
+{% extends 'main.html' %}
+{% block todo %}
+    <h3>All Tasks:</h3>
+    {% for task in all_to_do %}
+        Task: {{ task.task }}<br>
+    {% endfor %}
+{% endblock todo %}
